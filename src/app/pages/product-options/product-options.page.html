@@ -1,0 +1,16 @@
+<ion-header no-border>
+  <ion-toolbar color="white">
+    <ion-title text-center>Options</ion-title>
+  </ion-toolbar>>
+</ion-header>
+
+
+<ion-content>
+  <ion-list inset>
+    <ion-item *ngFor="let option of product.options" class="text-md-primary" (click)="selectOption(option)">
+      <ion-label>
+        {{option.title}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

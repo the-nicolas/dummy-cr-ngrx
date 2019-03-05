@@ -1,0 +1,5 @@
+.idea
+browserify-test
+build
+gulpfile.js
+bower.json

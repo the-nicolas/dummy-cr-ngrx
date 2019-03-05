@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
+  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
+  { path: 'invoice', loadChildren: './pages/invoice/invoice.module#InvoicePageModule' },
+  { path: 'product-options', loadChildren: './pages/product-options/product-options.module#ProductOptionsPageModule' }
 ];
 @NgModule({
   imports: [
@@ -10,4 +14,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

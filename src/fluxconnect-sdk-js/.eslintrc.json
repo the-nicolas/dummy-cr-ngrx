@@ -1,0 +1,15 @@
+{
+  "extends": "./tools/.eslintrc.json",
+  "rules":{
+    "no-trailing-spaces": ["error", {"skipBlankLines": true}],
+    "padded-blocks":"off",
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "comma-dangle": ["error", {
+        "arrays": "ignore",
+        "objects": "ignore",
+        "imports": "never",
+        "exports": "never",
+        "functions": "ignore"
+    }]
+  }
+}

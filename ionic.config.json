@@ -1,5 +1,7 @@
 {
   "name": "fluxIonic4",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

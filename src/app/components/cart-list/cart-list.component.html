@@ -1,0 +1,69 @@
+<ion-header *ngIf="header">
+  <ion-toolbar color="white">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-button size="small" slot="start" color="primary" mode="ios">
+        <ion-icon name="contact"></ion-icon>
+        Select Customer
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button size="small" slot="start" color="primary" mode="ios">
+        <ion-icon name="paper"></ion-icon>
+        New Invoice
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list class="products-list" [@cart]="cart.length" *ngIf="animate">
+    <ion-item *ngFor="let p of cart" (swipe)="swipeProduct(p,$event)">
+      <ion-label>
+        <ion-avatar item-left>
+          <img [src]="p.image || 'assets/imgs/placeholder.jpg'" />
+        </ion-avatar>
+        <h2>{{p.title}}</h2>
+        <ion-note item-end text-right>
+          <p>{{(p.__count*p.price)|currency:' ':true:'1.2-2'}}</p>
+          <p class="text-md-gray">{{p.__count}} x {{p.price|currency:' ':true:'1.2-2'}}</p>
+        </ion-note>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list class="products-list" *ngIf="!animate">
+    <ion-item *ngFor="let p of cart" (swipe)="swipeProduct(p,$event)">
+      <ion-label>
+        <ion-avatar item-left>
+          <img [src]="p.image || 'assets/imgs/placeholder.jpg'" />
+        </ion-avatar>
+        <h2>{{p.title}}</h2>
+        <ion-note item-end text-right>
+          <p>{{(p.__count*p.price)|currency:' ':true:'1.2-2'}}</p>
+          <p class="text-md-gray">{{p.__count}} x {{p.price|currency:' ':true:'1.2-2'}}</p>
+        </ion-note>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer *ngIf="footer">
+  <ion-toolbar color="white">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-button size="small" slot="start" color="primary" mode="ios">
+        % Add Discount
+      </ion-button>>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button size="small" slot="start" color="primary" mode="ios">
+        <ion-icon name="add"></ion-icon>
+        Add Individual Product
+      </ion-button>>
+    </ion-buttons>
+  </ion-toolbar>
+  <div padding-horizontal *ngIf="totalProducts">
+    <ion-button expand="block" color="primary" mode="ios" class="checkout-btn" (click)="checkout()">
+      <span>Pay {{totalProducts}} {{totalProducts>1?'Products':'Product'}}</span>
+      <span>{{totalAmount|currency:'USD':true:'1.2-2'}}</span>
+    </ion-button>>
+  </div>
+</ion-footer>
