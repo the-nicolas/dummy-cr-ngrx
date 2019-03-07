@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController, NavParams } from '@ionic/angular';
+import { NavController, MenuController, NavParams, ModalController } from '@ionic/angular';
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: 'app-invoice',
@@ -12,8 +13,13 @@ export class InvoicePage {
   totalAmount: number = 0;
   totalProducts: number = 0;
 
-  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public navParams: NavParams, private storage: Storage) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    public menuCtrl: MenuController,
+    public modalCtrl: ModalController,
+    public navParams: NavParams,
+    private storage: Storage
+  ) { }
 
   ionViewWillEnter() {
     this.getCart();
@@ -38,6 +44,6 @@ export class InvoicePage {
   }
 
   public closeMe() {
-    this.navCtrl.pop();
+    this.modalCtrl.dismiss();
   }
 }

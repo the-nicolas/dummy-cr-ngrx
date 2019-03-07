@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -11,7 +12,10 @@ import { AppComponent } from './app.component';
 import { CartService } from './services/cart.service';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
-import { CartPage } from './pages/cart/cart.page';
+import { CartPageModule } from './pages/cart/cart.module';
+import { ComponentModule } from './components/component.module'
+import { InvoicePageModule } from './pages/invoice/invoice.module';
+import { HomePageModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,11 @@ import { CartPage } from './pages/cart/cart.page';
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    CartPageModule,
+    ComponentModule,
+    HomePageModule,
+    InvoicePageModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     StatusBar,

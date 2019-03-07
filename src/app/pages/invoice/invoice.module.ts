@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { InvoicePage } from './invoice.page';
+import { IonicStorageModule } from '@ionic/storage';
 
 const routes: Routes = [
   {
@@ -19,8 +20,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [InvoicePage]
+  declarations: [InvoicePage],
+  entryComponents: [
+    InvoicePage,
+  ]
 })
-export class InvoicePageModule {}
+export class InvoicePageModule { }

@@ -29,13 +29,11 @@ import { CartService } from '../../services/cart.service';
 })
 export class CartListComponent {
 
-  @Input('header') header: boolean = true;
-  @Input('footer') footer: boolean = true;
   @Input('animate') animate: boolean = true;
 
   @Output() onCheckout = new EventEmitter<any>();
 
-  cart: any = [];
+  cartList: any = [];
   totalAmount: number = 0;
   totalProducts: number = 0;
 
@@ -46,28 +44,24 @@ export class CartListComponent {
   ) {
 
     this.getCart();
-    this.getCartValue();
 
     this.events.subscribe('cart:reload', (cart: any) => {
       this.getCart();
-      this.getCartValue();
     });
     this.events.subscribe('cart:item:added', (item: any) => {
-      this.getCartValue();
-      let prod = this.cart.find(p => p.id === item.id);
+      let prod = this.cartList.find(p => p.id === item.id);
       if (prod) {
         prod.__count = item.__count;
       } else {
-        this.cart.push(item);
+        this.cartList.push(item);
       }
     });
     this.events.subscribe('cart:item:removed', (item: any) => {
-      this.getCartValue();
-      let prod = this.cart.find(p => p.id === item.id);
+      let prod = this.cartList.find(p => p.id === item.id);
       if (prod) {
         prod.__count = item.__count;
         if (prod.__count <= 0) {
-          this.cart.splice(this.cart.indexOf(prod), 1);
+          this.cartList.splice(this.cartList.indexOf(prod), 1);
         }
       }
     });
@@ -78,15 +72,8 @@ export class CartListComponent {
    * @description Load the products from storage, Calculate the total Amount and Number of Products
    */
   public getCart() {
-    this.cartService.get().then(cart => {
-      this.cart = cart;
-    });
-  }
-
-  public getCartValue() {
-    this.cartService.getValue().then((value: any) => {
-      this.totalProducts = value.totalProducts;
-      this.totalAmount = value.totalAmount;
+    this.cartService.get().then(list => {
+      this.cartList = list;
     });
   }
 
@@ -108,9 +95,5 @@ export class CartListComponent {
         this.events.publish('cart:item:removed', item);
       });
     }
-  }
-
-  public checkout() {
-    this.onCheckout.emit(this.cart);
   }
 }

@@ -1,3 +1,66 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>POS</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list lines="none">
+        <ion-menu-toggle *ngFor="let p of pages">
+          <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-icon slot="start" [name]="p.icon"></ion-icon>
+            <ion-label>
+              {{p.title}}
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-split-pane>
+    <ion-menu side="end">
+      <ion-header>
+        <ion-toolbar color="white">
+          <ion-buttons slot="start">
+            <ion-button size="small" slot="start" color="primary" mode="ios">
+              <ion-icon name="contact"></ion-icon>
+              Select Customer
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button size="small" slot="start" color="primary" mode="ios">
+              <ion-icon name="paper"></ion-icon>
+              New Invoice
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <cart-list></cart-list>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar color="white">
+          <ion-buttons slot="start">
+            <ion-button size="small" slot="start" color="primary" mode="ios">
+              % Add Discount
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button size="small" slot="start" color="primary" mode="ios">
+              <ion-icon name="add"></ion-icon>
+              Add Individual Product
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <div padding-horizontal *ngIf="totalProducts">
+          <ion-button expand="block" color="primary" mode="ios" class="checkout-btn" (click)="onCheckout()">
+            <span>Pay {{totalProducts}} {{totalProducts>1?'Products':'Product'}}</span>
+            <span padding-start>{{totalAmount|currency:'USD':'symbol':'1.2-2'}}</span>
+          </ion-button>
+        </div>
+      </ion-footer>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

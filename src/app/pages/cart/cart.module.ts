@@ -6,7 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CartPage } from './cart.page';
-import { CartListComponent } from '../../components/cart-list/cart-list.component';
+import { ComponentModule } from '../../components/component.module';
+import { IonicStorageModule } from '@ionic/storage';
 
 const routes: Routes = [
   {
@@ -20,13 +21,15 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentModule,
+    IonicStorageModule,
   ],
   declarations: [
-    CartListComponent,
+    CartPage,
   ],
   entryComponents: [
     CartPage,
-  ]
+  ],
 })
 export class CartPageModule { }
