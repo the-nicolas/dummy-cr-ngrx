@@ -7,16 +7,16 @@ export class CreateArrayPipe implements PipeTransform {
 
   transform(length: number, start: number): any {
     let res = [];
-    let i = 0
+    let index = 0
     let _length;
     if (start) {
-      i = start;
+      index = start;
       _length = length + start;
     } else {
       _length = length;
     }
-    for (i; i < _length; i++) {
-      res.push(i);
+    for (index; index < _length; index++) {
+      res.push(index);
     }
     console.log(res);
     return res;

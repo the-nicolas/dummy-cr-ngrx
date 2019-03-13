@@ -32,9 +32,7 @@ export class CartPage {
     });
   }
 
-  ionViewDidLoad() {
-
-  }
+  ionViewDidLoad() { }
 
   public async onCheckout() {
     let invoiceModal = await this.modalCtrl.create({

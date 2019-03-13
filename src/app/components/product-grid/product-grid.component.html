@@ -3,8 +3,10 @@
     <ion-col text-center padding *ngIf="!products || !products.length" class="text-md-gray"><small>No products
         found</small></ion-col>
     <ng-template let-product let-i="index" ngFor [ngForOf]="products">
-      <ion-col width-20 (click)="selectProduct(product,$event)">
-        <div class="product-card" [ngClass]="{'is-category':product.isCategory, 'active':product.showSubProducts}">
+      <ion-col (click)="selectProduct(product,$event)">
+        <div class="product-card ion-activatable"
+          [ngClass]="{'is-category':product.isCategory, 'active':product.showSubProducts}">
+          <ion-ripple-effect></ion-ripple-effect>
           <div class="thumb" [ngClass]="{'image':product.image,'color':!product.image}"
             [style.background]="product.color">
             <img [src]="product.image || './assets/imgs/placeholder.jpg'" />

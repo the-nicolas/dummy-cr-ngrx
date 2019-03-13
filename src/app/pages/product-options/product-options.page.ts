@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from '@ionic/angular';
-import { ViewController } from '@ionic/core';
 
 @Component({
   selector: 'app-product-options',
@@ -15,9 +14,7 @@ export class ProductOptionsPage {
     this.product = this.navParams.get('product');
   }
 
-  ionViewDidEnter() {
-
-  }
+  ionViewDidEnter() { }
 
   public selectOption(option) {
     this.modalCtrl.dismiss(option);

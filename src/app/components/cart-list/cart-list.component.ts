@@ -28,14 +28,11 @@ import { CartService } from '../../services/cart.service';
   ]
 })
 export class CartListComponent {
-
-  @Input('animate') animate: boolean = true;
-
-  @Output() onCheckout = new EventEmitter<any>();
-
   cartList: any = [];
   totalAmount: number = 0;
   totalProducts: number = 0;
+
+  @Input('animate') animate: boolean = true;
 
   constructor(
     private events: Events,
@@ -49,7 +46,7 @@ export class CartListComponent {
       this.getCart();
     });
     this.events.subscribe('cart:item:added', (item: any) => {
-      let prod = this.cartList.find(p => p.id === item.id);
+      let prod = this.cartList.find(cart => cart.id === item.id);
       if (prod) {
         prod.__count = item.__count;
       } else {
@@ -57,7 +54,7 @@ export class CartListComponent {
       }
     });
     this.events.subscribe('cart:item:removed', (item: any) => {
-      let prod = this.cartList.find(p => p.id === item.id);
+      let prod = this.cartList.find(cart => cart.id === item.id);
       if (prod) {
         prod.__count = item.__count;
         if (prod.__count <= 0) {

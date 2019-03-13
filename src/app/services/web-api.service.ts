@@ -31,11 +31,22 @@ export class WebApiService {
     this.client = FluxConnect.create(apiCfg);
 
     //console.log('WebApiProvider', this.client);
-    this.client.setCredentials({ token: TokenStorageMixin.getStoredToken() }, TokenStorageMixin);
-    this.auth = this.wrapService(this.client.addService(AuthMixin), this.serviceCallWrapper.bind(this), this.serviceResponseWrapper.bind(this));
+    this.client.setCredentials(
+      { token: TokenStorageMixin.getStoredToken() },
+      TokenStorageMixin,
+    );
+    this.auth = this.wrapService(
+      this.client.addService(AuthMixin),
+      this.serviceCallWrapper.bind(this),
+      this.serviceResponseWrapper.bind(this),
+    );
     //this.devices = this.wrapService(this.client.getService(Services.Devices), this.serviceCallWrapper.bind(this), this.serviceResponseWrapper.bind(this));
     //this.services = this.wrapService(this.client.getService(Services.Services), this.serviceCallWrapper.bind(this), this.serviceResponseWrapper.bind(this));
-    this.transactions = this.wrapService(this.client.getService(Services.Transactions), this.serviceCallWrapper.bind(this), this.serviceResponseWrapper.bind(this));
+    this.transactions = this.wrapService(
+      this.client.getService(Services.Transactions),
+      this.serviceCallWrapper.bind(this),
+      this.serviceResponseWrapper.bind(this),
+    );
     //this.units = this.wrapService(this.client.getService(Services.Units), this.serviceCallWrapper.bind(this), this.serviceResponseWrapper.bind(this));
   }
 
@@ -57,7 +68,6 @@ export class WebApiService {
     //console.log('wrapService', service);
 
     return {
-
       service: service,
 
       callCustom: (method, ...args) => {
@@ -104,7 +114,6 @@ export class WebApiService {
         return responseWrapper(callWrapper(service, service.execute, args));
       }
     }
-
   }
 
   startLoader() {
@@ -122,7 +131,6 @@ export class WebApiService {
   }
 
   errorWrapper(error) {
-
     // console.log('WebApi.errorWrapper', error.error, error.message);
 
     this.stopLoader();
@@ -144,7 +152,6 @@ export class WebApiService {
       } catch (e) {
         (err as any).user = error.message
       }
-
     } else {
       err.message = error.message;
       // TODO not nice to have this check
@@ -157,7 +164,5 @@ export class WebApiService {
     (err as any).errType = error.error;
 
     throw err;
-
   }
-
 }

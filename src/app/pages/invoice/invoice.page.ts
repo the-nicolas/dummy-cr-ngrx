@@ -9,7 +9,7 @@ import { Storage } from "@ionic/storage";
 })
 export class InvoicePage {
 
-  cart: any;
+  cartList: any;
   totalAmount: number = 0;
   totalProducts: number = 0;
 
@@ -32,13 +32,13 @@ export class InvoicePage {
   */
   public getCart() {
     this.storage.get('cart').then(cart => {
-      this.cart = cart || [];
+      this.cartList = cart || [];
 
       this.totalAmount = 0;
       this.totalProducts = 0;
-      this.cart.forEach(p => {
-        this.totalProducts += p.__count;
-        this.totalAmount += (p.__count * p.price);
+      this.cartList.forEach(cart => {
+        this.totalProducts += cart.__count;
+        this.totalAmount += (cart.__count * cart.price);
       });
     });
   }

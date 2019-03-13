@@ -18,12 +18,14 @@ export class ProductGridComponent {
   perRow: number = 5;
   thisRow: number = 5;
 
-  public constructor(public platform: Platform, public popoverCtrl: PopoverController, private events: Events, public cartService: CartService) {
-  }
+  public constructor(
+    public platform: Platform,
+    public popoverCtrl: PopoverController,
+    private events: Events,
+    public cartService: CartService
+  ) { }
 
-  public ionViewDidEnter() {
-
-  }
+  public ionViewDidEnter() { }
 
   public async selectProduct(item: any, event) {
     if (item.isCategory) {
@@ -44,18 +46,18 @@ export class ProductGridComponent {
   }
 
   private loadProducts(item: any) {
-    this.products.forEach(p => {
-      if (p.id !== item.id) {
-        p.showSubProducts = false;
+    this.products.forEach(product => {
+      if (product.id !== item.id) {
+        product.showSubProducts = false;
       } else {
-        p.showSubProducts = !item.showSubProducts;
+        product.showSubProducts = !item.showSubProducts;
       }
     });
 
     if (item.showSubProducts) {
-      this.subProducts = Products.filter(p => p.categoryId === item.id);
-      let i = this.products.indexOf(item);
-      this.activeItemIndex = i > -1 ? i : null;
+      this.subProducts = Products.filter(product => product.categoryId === item.id);
+      let index = this.products.indexOf(item);
+      this.activeItemIndex = index > -1 ? index : null;
     } else {
       this.subProducts = null;
     }

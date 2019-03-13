@@ -6,8 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
-import { ProductGridComponent } from '../../components/product-grid/product-grid.component';
-import { CreateArrayPipe } from '../../pipes/create-array.pipe';
 import { ComponentModule } from '../../components/component.module';
 
 const routes: Routes = [
