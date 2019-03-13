@@ -21,7 +21,7 @@
 
 <ion-content>
   <products-grid [products]="products"></products-grid>
-  <ion-fab slot="fixed" vertical="bottom" right hideWhen="ipad,tablet,core">
+  <ion-fab slot="fixed" vertical="bottom" right class="hide-sm-up">
     <ion-fab-button color="primary" class="cart-fab" (click)="openCart()">
       <ion-icon name="cart"></ion-icon>
       <ion-badge color="danger" *ngIf="totalProducts">{{totalProducts}}</ion-badge>

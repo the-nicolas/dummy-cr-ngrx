@@ -8,4 +8,9 @@
       right: 0px;
     }
   }
+  @media (min-width: 992px) {
+    .hide-sm-up {
+      display: none;
+    }
+  }
 }
