@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from '@ionic/angular';
+import { NavController, NavParams, PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-options',
@@ -10,13 +10,17 @@ export class ProductOptionsPage {
 
   product: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public popoverCtrl: PopoverController
+  ) {
     this.product = this.navParams.get('product');
   }
 
   ionViewDidEnter() { }
 
   public selectOption(option) {
-    this.modalCtrl.dismiss(option);
+    this.popoverCtrl.dismiss(option);
   }
 }

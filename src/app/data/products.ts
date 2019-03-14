@@ -194,7 +194,7 @@ export const Products = [
         "id": 999,
         "title": "Snacks",
         "isCategory": false,
-        "categoryId": 9999,
+        "categoryId": 3,
         "image": "",
         price: 10,
         "options": [

@@ -14,9 +14,13 @@ export class HomePage {
   products: any;
   totalProducts: number = 0;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public cart: CartService, private events: Events) {
-    this.products = Products.filter(p => p.categoryId === null);
-
+  constructor(
+    public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public cart: CartService,
+    private events: Events
+  ) {
+    this.products = Products.filter(product => product.categoryId === null);
 
     this.setProductsCount();
     this.events.subscribe('cart:reload', (cart) => {

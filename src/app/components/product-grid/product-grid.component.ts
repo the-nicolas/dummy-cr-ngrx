@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Platform, PopoverController, Events } from '@ionic/angular';
 import { CartService } from '../../services/cart.service';
 import { ProductOptionsPage } from '../../pages/product-options/product-options.page';
@@ -9,11 +9,11 @@ import { Products } from '../../data/products';
   templateUrl: './product-grid.component.html',
   styleUrls: ['./product-grid.component.scss'],
 })
-export class ProductGridComponent {
+export class ProductGridComponent implements OnDestroy {
 
   @Input('products') products: any = [];
 
-  subProducts: any;
+  subProducts: any = null;
   activeItemIndex: any;
   perRow: number = 5;
   thisRow: number = 5;
@@ -21,25 +21,28 @@ export class ProductGridComponent {
   public constructor(
     public platform: Platform,
     public popoverCtrl: PopoverController,
+    public cartService: CartService,
     private events: Events,
-    public cartService: CartService
+    private ref: ChangeDetectorRef,
   ) { }
 
   public ionViewDidEnter() { }
 
   public async selectProduct(item: any, event) {
+    this.subProducts = null;
+    this.ref.detectChanges();
     if (item.isCategory) {
       this.loadProducts(item);
     } else if (item.options && item.options.length) {
-      let optionsPopover = await this.popoverCtrl.create({
+      const optionsPopover = await this.popoverCtrl.create({
         component: ProductOptionsPage,
         componentProps: { product: item },
         event,
       });
-      await optionsPopover.present();
-      await optionsPopover.onDidDismiss().then((option) => {
+      optionsPopover.onDidDismiss().then((option) => {
         this.addToCart(item, option);
       });
+      await optionsPopover.present();
     } else {
       this.addToCart(item);
     }
@@ -78,5 +81,9 @@ export class ProductGridComponent {
     this.cartService.addItem(product, option).then(item => {
       this.events.publish('cart:item:added', item);
     });
+  }
+
+  ngOnDestroy() {
+    this.products.forEach(product => product.showSubProducts = false);
   }
 }

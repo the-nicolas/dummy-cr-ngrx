@@ -16,6 +16,7 @@ import { CartPageModule } from './pages/cart/cart.module';
 import { ComponentModule } from './components/component.module'
 import { InvoicePageModule } from './pages/invoice/invoice.module';
 import { HomePageModule } from './pages/home/home.module';
+import { ProductOptionsPageModule } from './pages/product-options/product-options.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { HomePageModule } from './pages/home/home.module';
     ComponentModule,
     HomePageModule,
     InvoicePageModule,
+    ProductOptionsPageModule,
     BrowserAnimationsModule,
   ],
   providers: [
