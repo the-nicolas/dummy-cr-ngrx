@@ -196,7 +196,7 @@ export const Products = [
         "isCategory": false,
         "categoryId": 3,
         "image": "",
-        price: 10,
+        "price": 10,
         "options": [
             {
                 "title": "Option One",

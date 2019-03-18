@@ -3,6 +3,9 @@ import { NavController, ModalController, Events } from '@ionic/angular';
 import { CartService } from '../../services/cart.service';
 import { Products } from '../../data/products';
 import { CartPage } from '../cart/cart.page';
+import { Store, select } from '@ngrx/store';
+import { selectTotalProducts } from '../../store/selectors/cart.selector';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,39 +13,21 @@ import { CartPage } from '../cart/cart.page';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-
   products: any;
-  totalProducts: number = 0;
+  totalProducts: Observable<any>;
 
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
-    public cart: CartService,
-    private events: Events
+    public cartService: CartService,
+    private store: Store<any>,
   ) {
     this.products = Products.filter(product => product.categoryId === null);
-
-    this.setProductsCount();
-    this.events.subscribe('cart:reload', (cart) => {
-      this.setProductsCount();
-    });
-    this.events.subscribe('cart:item:added', (item) => {
-      this.setProductsCount();
-    });
-    this.events.subscribe('cart:item:removed', (item) => {
-      this.setProductsCount();
-    });
+    this.totalProducts = this.store.pipe(select(selectTotalProducts));
   }
 
   public async openCart() {
     const cartModal = await this.modalCtrl.create({ component: CartPage });
     return await cartModal.present();
-    //this.navCtrl.push(CartPage);
-  }
-
-  setProductsCount() {
-    this.cart.count().then((count: any) => {
-      this.totalProducts = count;
-    });
   }
 }

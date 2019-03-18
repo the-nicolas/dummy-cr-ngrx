@@ -17,6 +17,10 @@ import { ComponentModule } from './components/component.module'
 import { InvoicePageModule } from './pages/invoice/invoice.module';
 import { HomePageModule } from './pages/home/home.module';
 import { ProductOptionsPageModule } from './pages/product-options/product-options.module';
+import { StoreModule } from '@ngrx/store';
+import { cartReducer } from './store/reducers/cart.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,11 @@ import { ProductOptionsPageModule } from './pages/product-options/product-option
     InvoicePageModule,
     ProductOptionsPageModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({ cart: cartReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: !environment.production, // Restrict extension to log-only mode
+    }),
   ],
   providers: [
     StatusBar,

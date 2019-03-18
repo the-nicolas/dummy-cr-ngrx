@@ -1,23 +1,27 @@
-import { Component } from '@angular/core';
-
-import { Platform, ToastController, ModalController, Events } from '@ionic/angular';
+import { Component, OnDestroy } from '@angular/core';
+import { Platform, ToastController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { HomePage } from './pages/home/home.page';
 import { WebApiService } from './services/web-api.service';
 import { CartService } from './services/cart.service';
+import { Store, select } from '@ngrx/store';
+import { CartState } from './store/state/cart.state';
+import { selectTotalAmount, selectTotalProducts, selectCartList } from './store/selectors/cart.selector';
+import { GetCarts } from './store/actions/cart.actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
-
+export class AppComponent implements OnDestroy {
   rootPage: any = HomePage;
 
   pages: Array<{ title: string, url: any, icon: string }>;
-  totalProducts: number = 0;
-  totalAmount: number = 0;
+  totalProducts: any;
+  totalAmount: any;
+  cartValue: any;
+  cartList: any;
 
   constructor(
     public toastCtrl: ToastController,
@@ -28,7 +32,7 @@ export class AppComponent {
     public api: WebApiService,
     private cartService: CartService,
     private transSrv: WebApiService,
-    private events: Events,
+    private store: Store<CartState>,
   ) {
     this.initializeApp();
 
@@ -40,22 +44,14 @@ export class AppComponent {
       { title: 'Admin', url: '/home', icon: 'lock' },
       { title: 'Settings', url: '/home', icon: 'settings' }
     ];
+    this.store.dispatch(new GetCarts());
 
-    this.getCartValue();
-
-    this.events.subscribe('cart:reload', (cart: any) => {
-      this.getCartValue();
-    });
-    this.events.subscribe('cart:item:added', (item: any) => {
-      this.getCartValue();
-    });
-    this.events.subscribe('cart:item:removed', (item: any) => {
-      this.getCartValue();
-    });
+    this.cartList = this.store.pipe(select(selectCartList));
+    this.totalAmount = this.store.pipe(select(selectTotalAmount));
+    this.totalProducts = this.store.pipe(select(selectTotalProducts));
   }
 
   initializeApp() {
-
     this.api.auth.callCustom('login', { deviceUid: "crTest1" }).then(response => {
 
       if (response.body.hasOwnProperty("error")) {
@@ -64,19 +60,15 @@ export class AppComponent {
         let tokenHeader = response.headers['authorization'];
 
         if (tokenHeader) {
-
           let tokStr = tokenHeader.split("Bearer ")[1];
           let t = { access: { header: tokenHeader, token: tokStr } };
           this.api.setCredentials({ token: t });
 
           this.api.client.open()
-
         } else {
           throw new Error("Token not found in login response header");
         }
-
       }
-
     });
 
     this.platform.ready().then(() => {
@@ -121,18 +113,10 @@ export class AppComponent {
         console.log(err)
       })
     });
-
-
   }
 
-  public getCartValue() {
-    this.cartService.getValue().then((value: any) => {
-      this.totalProducts = value.totalProducts;
-      this.totalAmount = value.totalAmount;
-    });
-  }
-
-  /*public setSplitPane() {
+  /*
+  public setSplitPane() {
       if (this.platform.is('ipad') || this.platform.is('tablet') || this.platform.width() > 992) {
           if (this.nav.getActive() === this.nav.first()) {
               return true;
@@ -142,5 +126,10 @@ export class AppComponent {
       } else {
           return false;
       }
-  }*/
+  }
+  */
+
+  ngOnDestroy() {
+    sessionStorage.setItem('CART_LIST', JSON.stringify(this.cartList));
+  }
 }

@@ -1,7 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate, keyframes } from '@angular/animations';
-import { Events } from '@ionic/angular';
 import { CartService } from '../../services/cart.service';
+import { Store, select } from '@ngrx/store';
+import { CartState } from '../../store/state/cart.state';
+import { selectCartList } from '../../store/selectors/cart.selector';
+import { RemoveCart, AddCart, RemoveOneCart } from '../../store/actions/cart.actions';
 
 @Component({
   selector: 'cart-list',
@@ -28,69 +31,28 @@ import { CartService } from '../../services/cart.service';
   ]
 })
 export class CartListComponent {
+  cartListStore;
   cartList: any = [];
-  totalAmount: number = 0;
-  totalProducts: number = 0;
 
   @Input('animate') animate: boolean = true;
+  cartValue: any;
 
   constructor(
-    private events: Events,
-    // private storage: Storage,
     public cartService: CartService,
+    private store: Store<CartState>
   ) {
-
-    this.getCart();
-
-    this.events.subscribe('cart:reload', (cart: any) => {
-      this.getCart();
-    });
-    this.events.subscribe('cart:item:added', (item: any) => {
-      let prod = this.cartList.find(cart => cart.id === item.id);
-      if (prod) {
-        prod.__count = item.__count;
-      } else {
-        this.cartList.push(item);
-      }
-    });
-    this.events.subscribe('cart:item:removed', (item: any) => {
-      let prod = this.cartList.find(cart => cart.id === item.id);
-      if (prod) {
-        prod.__count = item.__count;
-        if (prod.__count <= 0) {
-          this.cartList.splice(this.cartList.indexOf(prod), 1);
-        }
-      }
-    });
+    this.cartListStore = this.store.pipe(select(selectCartList));
   }
 
-  /**
-   * @name getCart
-   * @description Load the products from storage, Calculate the total Amount and Number of Products
-   */
-  public getCart() {
-    this.cartService.get().then(list => {
-      this.cartList = list;
-    });
+  addProduct(cart) {
+    this.store.dispatch(new AddCart(cart));
   }
 
-  /**
-   * @name swipeProduct
-   * @description When a product is swipe to left or right
-   *  - Right swipe if direcrion is 4
-   *  - Left swipe if direcrion is 2
-   * @param {object} product swiped product
-   * @param {event} event swipe event to determine is it left or right
-   */
-  public swipeProduct(product: any, event: any) {
-    if (event.direction === 4) {
-      this.cartService.addItem(product).then(item => {
-        this.events.publish('cart:item:added', item);
-      });
-    } else if (event.direction === 2) {
-      this.cartService.removeItem(product, 1).then(item => {
-        this.events.publish('cart:item:removed', item);
-      });
-    }
+  removeCart(cart) {
+    this.store.dispatch(new RemoveCart(cart.id));
+  }
+
+  removeAllCart(cart) {
+    this.store.dispatch(new RemoveOneCart(cart.id));
   }
 }

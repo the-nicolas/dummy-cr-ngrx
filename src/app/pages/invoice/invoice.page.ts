@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, MenuController, NavParams, ModalController } from '@ionic/angular';
-import { Storage } from "@ionic/storage";
+import { Store, select } from '@ngrx/store';
+import { CartState } from '../../store/state/cart.state';
+import { selectTotalAmount, selectTotalProducts } from '../../store/selectors/cart.selector';
 
 @Component({
   selector: 'app-invoice',
@@ -8,39 +10,21 @@ import { Storage } from "@ionic/storage";
   styleUrls: ['./invoice.page.scss'],
 })
 export class InvoicePage {
-
   cartList: any;
-  totalAmount: number = 0;
-  totalProducts: number = 0;
+  totalAmount: any;
+  totalProducts: any;
 
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
     public modalCtrl: ModalController,
     public navParams: NavParams,
-    private storage: Storage
+    private store: Store<CartState>
   ) { }
 
-  ionViewWillEnter() {
-    this.getCart();
-  }
-
-
-  /**
-  * @name getCart
-  * @description Load the products from storage, Calculate the total Amount and Number of Products
-  */
-  public getCart() {
-    this.storage.get('cart').then(cart => {
-      this.cartList = cart || [];
-
-      this.totalAmount = 0;
-      this.totalProducts = 0;
-      this.cartList.forEach(cart => {
-        this.totalProducts += cart.__count;
-        this.totalAmount += (cart.__count * cart.price);
-      });
-    });
+  ngOnInit() {
+    this.totalAmount = this.store.pipe(select(selectTotalAmount));
+    this.totalProducts = this.store.pipe(select(selectTotalProducts));
   }
 
   public closeMe() {

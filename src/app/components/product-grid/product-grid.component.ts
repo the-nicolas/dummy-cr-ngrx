@@ -3,6 +3,9 @@ import { Platform, PopoverController, Events } from '@ionic/angular';
 import { CartService } from '../../services/cart.service';
 import { ProductOptionsPage } from '../../pages/product-options/product-options.page';
 import { Products } from '../../data/products';
+import { CartState } from '../../store/state/cart.state';
+import { Store } from '@ngrx/store';
+import { AddCart } from '../../store/actions/cart.actions';
 
 @Component({
   selector: 'products-grid',
@@ -24,6 +27,7 @@ export class ProductGridComponent implements OnDestroy {
     public cartService: CartService,
     private events: Events,
     private ref: ChangeDetectorRef,
+    private store: Store<CartState>,
   ) { }
 
   public ionViewDidEnter() { }
@@ -78,9 +82,7 @@ export class ProductGridComponent implements OnDestroy {
   }
 
   public addToCart(product: any, option: any = {}) {
-    this.cartService.addItem(product, option).then(item => {
-      this.events.publish('cart:item:added', item);
-    });
+    this.store.dispatch(new AddCart(product));
   }
 
   ngOnDestroy() {

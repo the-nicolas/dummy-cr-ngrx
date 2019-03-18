@@ -36,10 +36,10 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <div padding-horizontal *ngIf="totalProducts">
+  <div padding-horizontal *ngIf="totalProducts | async">
     <ion-button expand="block" color="primary" mode="ios" class="checkout-btn" (click)="onCheckout()">
-      <span>Pay {{totalProducts}} {{totalProducts>1?'Products':'Product'}}</span>
-      <span padding-start>{{totalAmount|currency:'USD':'symbol':'1.2-2'}}</span>
+      <span>Pay {{ totalProducts | async }} {{ (totalProducts | async) > 1 ? 'Products' : 'Product' }}</span>
+      <span padding-start>{{totalAmount | async | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
     </ion-button>
   </div>
 </ion-footer>
