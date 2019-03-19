@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController, Events } from '@ionic/angular';
-import { CartService } from '../../services/cart.service';
+import { Component } from '@angular/core';
+import { NavController, ModalController } from '@ionic/angular';
 import { Products } from '../../data/products';
 import { CartPage } from '../cart/cart.page';
 import { Store, select } from '@ngrx/store';
@@ -19,7 +18,6 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
-    public cartService: CartService,
     private store: Store<any>,
   ) {
     this.products = Products.filter(product => product.categoryId === null);

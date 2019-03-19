@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'createArray'
 })
 export class CreateArrayPipe implements PipeTransform {
-
   transform(length: number, start: number): any {
     let res = [];
     let index = 0
@@ -18,7 +17,6 @@ export class CreateArrayPipe implements PipeTransform {
     for (index; index < _length; index++) {
       res.push(index);
     }
-    console.log(res);
     return res;
   }
 

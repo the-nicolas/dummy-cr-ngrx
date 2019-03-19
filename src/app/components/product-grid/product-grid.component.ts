@@ -1,11 +1,10 @@
 import { Component, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { Platform, PopoverController, Events } from '@ionic/angular';
-import { CartService } from '../../services/cart.service';
+import { Platform, PopoverController } from '@ionic/angular';
 import { ProductOptionsPage } from '../../pages/product-options/product-options.page';
 import { Products } from '../../data/products';
 import { CartState } from '../../store/state/cart.state';
 import { Store } from '@ngrx/store';
-import { AddCart } from '../../store/actions/cart.actions';
+import { AddProduct } from '../../store/actions/cart.actions';
 
 @Component({
   selector: 'products-grid',
@@ -13,7 +12,6 @@ import { AddCart } from '../../store/actions/cart.actions';
   styleUrls: ['./product-grid.component.scss'],
 })
 export class ProductGridComponent implements OnDestroy {
-
   @Input('products') products: any = [];
 
   subProducts: any = null;
@@ -21,11 +19,9 @@ export class ProductGridComponent implements OnDestroy {
   perRow: number = 5;
   thisRow: number = 5;
 
-  public constructor(
+  constructor(
     public platform: Platform,
     public popoverCtrl: PopoverController,
-    public cartService: CartService,
-    private events: Events,
     private ref: ChangeDetectorRef,
     private store: Store<CartState>,
   ) { }
@@ -43,8 +39,8 @@ export class ProductGridComponent implements OnDestroy {
         componentProps: { product: item },
         event,
       });
-      optionsPopover.onDidDismiss().then((option) => {
-        this.addToCart(item, option);
+      optionsPopover.onDidDismiss().then(() => {
+        this.addToCart(item);
       });
       await optionsPopover.present();
     } else {
@@ -53,7 +49,7 @@ export class ProductGridComponent implements OnDestroy {
   }
 
   private loadProducts(item: any) {
-    this.products.forEach(product => {
+    this.products.forEach((product) => {
       if (product.id !== item.id) {
         product.showSubProducts = false;
       } else {
@@ -81,11 +77,11 @@ export class ProductGridComponent implements OnDestroy {
     return false;
   }
 
-  public addToCart(product: any, option: any = {}) {
-    this.store.dispatch(new AddCart(product));
+  public addToCart(product: any) {
+    this.store.dispatch(new AddProduct(product));
   }
 
   ngOnDestroy() {
-    this.products.forEach(product => product.showSubProducts = false);
+    this.products.forEach((product) => product.showSubProducts = false);
   }
 }

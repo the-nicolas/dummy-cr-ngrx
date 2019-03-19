@@ -9,7 +9,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CartService } from './services/cart.service';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { CartPageModule } from './pages/cart/cart.module';
@@ -18,7 +17,6 @@ import { InvoicePageModule } from './pages/invoice/invoice.module';
 import { HomePageModule } from './pages/home/home.module';
 import { ProductOptionsPageModule } from './pages/product-options/product-options.module';
 import { StoreModule } from '@ngrx/store';
-import { cartReducer } from './store/reducers/cart.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -41,7 +39,7 @@ import { CartEffect } from './store/effects/cart.effect';
     InvoicePageModule,
     ProductOptionsPageModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ cart: cartReducer }),
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([CartEffect]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
@@ -52,7 +50,6 @@ import { CartEffect } from './store/effects/cart.effect';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    CartService,
   ],
   bootstrap: [AppComponent],
 })

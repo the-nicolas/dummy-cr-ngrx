@@ -18,7 +18,7 @@
       </ion-col>
       <ion-col size="12" *ngIf="addSubGrid(i) && subProducts !== null">
         <products-grid [products]="subProducts"
-          *ngIf="((perRow|createArray:i-(thisRow - 1)).indexOf(activeItemIndex)!==-1)"></products-grid>
+          *ngIf="( perRow | createArray : i - (thisRow - 1) ).indexOf(activeItemIndex) !== -1"></products-grid>
       </ion-col>
     </ng-template>
   </ion-row>

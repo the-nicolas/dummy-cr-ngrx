@@ -4,11 +4,10 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { HomePage } from './pages/home/home.page';
 import { WebApiService } from './services/web-api.service';
-import { CartService } from './services/cart.service';
 import { Store, select } from '@ngrx/store';
 import { CartState } from './store/state/cart.state';
 import { selectTotalAmount, selectTotalProducts, selectCartList } from './store/selectors/cart.selector';
-import { GetCarts } from './store/actions/cart.actions';
+import { LoadCart } from './store/actions/cart.actions';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +29,6 @@ export class AppComponent {
     public splashScreen: SplashScreen,
     public modalCtrl: ModalController,
     public api: WebApiService,
-    private cartService: CartService,
     private transSrv: WebApiService,
     private store: Store<CartState>,
   ) {
@@ -44,7 +42,7 @@ export class AppComponent {
       { title: 'Admin', url: '/home', icon: 'lock' },
       { title: 'Settings', url: '/home', icon: 'settings' }
     ];
-    this.store.dispatch(new GetCarts());
+    this.store.dispatch(new LoadCart());
 
     this.cartList = this.store.pipe(select(selectCartList));
     this.totalAmount = this.store.pipe(select(selectTotalAmount));
@@ -53,7 +51,6 @@ export class AppComponent {
 
   initializeApp() {
     this.api.auth.callCustom('login', { deviceUid: "crTest1" }).then(response => {
-
       if (response.body.hasOwnProperty("error")) {
         throw new Error(response.body.msg)
       } else {
@@ -74,7 +71,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       // Status bar configurations
       this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString('#ffffff'); //00786c
+      this.statusBar.backgroundColorByHexString('#ffffff'); // 00786c
       this.statusBar.styleDefault()
 
       // Hide splash screen
@@ -105,20 +102,6 @@ export class AppComponent {
       toastMessage('Payment failed!');
       console.log("payment err");
       console.log(err)
-    })
+    });
   }
-
-  /*
-  public setSplitPane() {
-      if (this.platform.is('ipad') || this.platform.is('tablet') || this.platform.width() > 992) {
-          if (this.nav.getActive() === this.nav.first()) {
-              return true;
-          } else {
-              return false;
-          }
-      } else {
-          return false;
-      }
-  }
-  */
 }

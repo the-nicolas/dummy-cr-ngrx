@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate, keyframes } from '@angular/animations';
-import { CartService } from '../../services/cart.service';
 import { Store, select } from '@ngrx/store';
 import { CartState } from '../../store/state/cart.state';
 import { selectCartList } from '../../store/selectors/cart.selector';
-import { RemoveCart, AddCart, RemoveOneCart } from '../../store/actions/cart.actions';
+import { UpdateProductQuantity, AddProduct } from '../../store/actions/cart.actions';
 
 @Component({
   selector: 'cart-list',
@@ -38,21 +37,16 @@ export class CartListComponent {
   cartValue: any;
 
   constructor(
-    public cartService: CartService,
     private store: Store<CartState>
   ) {
     this.cartListStore = this.store.pipe(select(selectCartList));
   }
 
   addProduct(cart) {
-    this.store.dispatch(new AddCart(cart));
+    this.store.dispatch(new AddProduct(cart));
   }
 
-  removeCart(cart) {
-    this.store.dispatch(new RemoveCart(cart.id));
-  }
-
-  removeAllCart(cart) {
-    this.store.dispatch(new RemoveOneCart(cart.id));
+  updateQuantity(cart, count?: number) {
+    this.store.dispatch(new UpdateProductQuantity(cart.id, count));
   }
 }

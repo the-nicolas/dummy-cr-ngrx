@@ -2,37 +2,37 @@ import { Action } from '@ngrx/store';
 import { Cart } from '../../models/cart.interface';
 
 export enum CartActions {
-  GET_CARTS = '[Cart] Get Carts',
-  REMOVE_CARTS = '[Cart] Remove Carts',
-  ADD_CART = '[Cart] Add Cart',
-  REMOVE_CART = '[Cart] Remove Cart',
-  REMOVE_ONE_CART = '[Cart] Remove One Cart'
+  LOAD_CART = '[Cart] Load Cart',
+  ADD_PRODUCT = '[Cart] Add Product',
+  UPDATE_QUANTITY = '[Cart] Remove Product',
+  CLEAR_CART = '[Cart] Clear Cart',
 }
 
-export class GetCarts implements Action {
-  readonly type = CartActions.GET_CARTS;
+export class LoadCart implements Action {
+  readonly type = CartActions.LOAD_CART;
 }
 
-export class RemoveCarts implements Action {
-  readonly type = CartActions.REMOVE_CARTS;
-}
-
-export class AddCart implements Action {
-  readonly type = CartActions.ADD_CART;
+export class AddProduct implements Action {
+  readonly type = CartActions.ADD_PRODUCT;
 
   constructor(public payload: Cart) { }
 }
 
-export class RemoveCart implements Action {
-  readonly type = CartActions.REMOVE_CART;
+export class UpdateProductQuantity implements Action {
+  readonly type = CartActions.UPDATE_QUANTITY;
+
+  constructor(
+    public payload: number,
+    // Default -1, means remove product itself from cart.
+    // Any other number will just decrease quantity.
+    public count: number = -1,
+  ) { }
+}
+
+export class ClearCart implements Action {
+  readonly type = CartActions.CLEAR_CART;
 
   constructor(public payload: number) { }
 }
 
-export class RemoveOneCart implements Action {
-  readonly type = CartActions.REMOVE_ONE_CART;
-
-  constructor(public payload: number) { }
-}
-
-export type CartsActions = GetCarts | RemoveCarts | AddCart | RemoveCart | RemoveOneCart;
+export type CartsActions = LoadCart | AddProduct | UpdateProductQuantity | ClearCart;
