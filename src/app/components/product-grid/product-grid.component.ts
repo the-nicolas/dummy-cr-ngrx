@@ -32,6 +32,7 @@ export class ProductGridComponent implements OnDestroy {
     this.subProducts = null;
     this.ref.detectChanges();
     if (item.isCategory) {
+      this.loseFocus(item, true);
       this.loadProducts(item);
     } else if (item.options && item.options.length) {
       const optionsPopover = await this.popoverCtrl.create({
@@ -44,26 +45,18 @@ export class ProductGridComponent implements OnDestroy {
       });
       await optionsPopover.present();
     } else {
+      this.loseFocus(item);
       this.addToCart(item);
     }
   }
 
   private loadProducts(item: any) {
-    this.products.forEach((product) => {
-      if (product.id !== item.id) {
-        product.showSubProducts = false;
-      } else {
-        product.showSubProducts = !item.showSubProducts;
-      }
-    });
-
-    if (item.showSubProducts) {
-      this.subProducts = Products.filter(product => product.categoryId === item.id);
-      let index = this.products.indexOf(item);
-      this.activeItemIndex = index > -1 ? index : null;
-    } else {
-      this.subProducts = null;
+    if (!item.showSubProducts) {
+      return;
     }
+    this.subProducts = Products.filter(product => product.categoryId === item.id);
+    let index = this.products.indexOf(item);
+    this.activeItemIndex = index > -1 ? index : null;
   }
 
   public addSubGrid(index: number) {
@@ -75,6 +68,15 @@ export class ProductGridComponent implements OnDestroy {
       return true;
     }
     return false;
+  }
+
+  private loseFocus(item, isCategory = false) {
+    this.products.forEach((product) => {
+      if (product.id !== item.id || !isCategory) {
+        return product.showSubProducts = false;
+      }
+      product.showSubProducts = !item.showSubProducts;
+    });
   }
 
   public addToCart(product: any) {
