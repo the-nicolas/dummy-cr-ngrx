@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Platform, ToastController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -14,7 +14,7 @@ import { GetCarts } from './store/actions/cart.actions';
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent {
   rootPage: any = HomePage;
 
   pages: Array<{ title: string, url: any, icon: string }>;
@@ -85,34 +85,27 @@ export class AppComponent implements OnDestroy {
   }
 
   public onCheckout() {
+    const toastMessage = async (message) => {
+      const toast = await this.toastCtrl.create({
+        message: message,
+        showCloseButton: true
+      });
+      toast.present();
+    }
 
-    this.cartService.getValue().then((value: any) => {
-      // let invoiceModal = this.modalCtrl.create(InvoicePage, {}, {cssClass: 'invoice-modal', showBackdrop: false});
-      // invoiceModal.present();
-      // this.nav.push(InvoicePage);
-
-      const toastMessage = async (message) => {
-        const toast = await this.toastCtrl.create({
-          message: message,
-          showCloseButton: true
-        });
-        toast.present();
-      }
-
-      let a = Math.round(value.totalAmount * 100);
-      this.transSrv.transactions.create('{"total":' + a + '}').then(function (result) {
-        toastMessage('Payment OK.');
-        console.log(result)
-      }, function (result) {
-        toastMessage('Payment failed!');
-        console.log("payment failed");
-        console.log(result)
-      }).catch(function (err) {
-        toastMessage('Payment failed!');
-        console.log("payment err");
-        console.log(err)
-      })
-    });
+    let a = Math.round(this.totalAmount * 100);
+    this.transSrv.transactions.create('{"total":' + a + '}').then(function (result) {
+      toastMessage('Payment OK.');
+      console.log(result)
+    }, function (result) {
+      toastMessage('Payment failed!');
+      console.log("payment failed");
+      console.log(result)
+    }).catch(function (err) {
+      toastMessage('Payment failed!');
+      console.log("payment err");
+      console.log(err)
+    })
   }
 
   /*
@@ -128,8 +121,4 @@ export class AppComponent implements OnDestroy {
       }
   }
   */
-
-  ngOnDestroy() {
-    sessionStorage.setItem('CART_LIST', JSON.stringify(this.cartList));
-  }
 }
