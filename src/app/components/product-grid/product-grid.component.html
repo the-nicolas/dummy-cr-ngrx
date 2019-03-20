@@ -1,7 +1,8 @@
 <ion-grid>
   <ion-row align-items-end>
-    <ion-col text-center padding *ngIf="!products || !products.length" class="text-md-gray"><small>No products
-        found</small></ion-col>
+    <ion-col text-center padding *ngIf="!products || !products.length" class="text-md-gray">
+      <small>No products found</small>
+    </ion-col>
     <ng-template let-product let-i="index" ngFor [ngForOf]="products">
       <ion-col (click)="selectProduct(product, $event)">
         <div class="product-card ion-activatable"
@@ -17,8 +18,9 @@
         </div>
       </ion-col>
       <ion-col size="12" *ngIf="addSubGrid(i) && subProducts !== null">
-        <products-grid [products]="subProducts"
-          *ngIf="( perRow | createArray : i - (thisRow - 1) ).indexOf(activeItemIndex) !== -1"></products-grid>
+        <products-grid [products]="subProducts" [active]="activeItem"
+          *ngIf="( perRow | createArray : i - (thisRow - 1) ).indexOf(activeItemIndex) !== -1">
+        </products-grid>
       </ion-col>
     </ng-template>
   </ion-row>

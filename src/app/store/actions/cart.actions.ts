@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
-import { Cart } from '../../models/cart.interface';
+import { CartItem } from '../../models/cart.interface';
 
-export enum CartActions {
+export enum ECartActions {
   LOAD_CART = '[Cart] Load Cart',
   ADD_PRODUCT = '[Cart] Add Product',
   UPDATE_QUANTITY = '[Cart] Remove Product',
@@ -9,17 +9,17 @@ export enum CartActions {
 }
 
 export class LoadCart implements Action {
-  readonly type = CartActions.LOAD_CART;
+  readonly type = ECartActions.LOAD_CART;
 }
 
 export class AddProduct implements Action {
-  readonly type = CartActions.ADD_PRODUCT;
+  readonly type = ECartActions.ADD_PRODUCT;
 
-  constructor(public payload: Cart) { }
+  constructor(public payload: CartItem) { }
 }
 
 export class UpdateProductQuantity implements Action {
-  readonly type = CartActions.UPDATE_QUANTITY;
+  readonly type = ECartActions.UPDATE_QUANTITY;
 
   constructor(
     public payload: number,
@@ -30,9 +30,9 @@ export class UpdateProductQuantity implements Action {
 }
 
 export class ClearCart implements Action {
-  readonly type = CartActions.CLEAR_CART;
+  readonly type = ECartActions.CLEAR_CART;
 
   constructor(public payload: number) { }
 }
 
-export type CartsActions = LoadCart | AddProduct | UpdateProductQuantity | ClearCart;
+export type CartActions = LoadCart | AddProduct | UpdateProductQuantity | ClearCart;

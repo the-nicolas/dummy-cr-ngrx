@@ -20,7 +20,7 @@
 </ion-header>
 
 <ion-content>
-  <products-grid [products]="products"></products-grid>
+  <products-grid [products]="products" [active]="activeItem | async"></products-grid>
   <ion-fab slot="fixed" vertical="bottom" right class="hide-sm-up">
     <ion-fab-button color="primary" class="cart-fab" (click)="openCart()">
       <ion-icon name="cart"></ion-icon>

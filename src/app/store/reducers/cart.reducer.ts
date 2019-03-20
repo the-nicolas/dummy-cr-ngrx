@@ -1,18 +1,18 @@
 import { initialCartState } from '../state/cart.state'
-import { CartsActions, CartActions } from '../actions/cart.actions';
+import { CartActions, ECartActions } from '../actions/cart.actions';
 
 export function CartReducer(
   state = initialCartState,
-  action: CartsActions,
+  action: CartActions,
 ) {
   switch (action.type) {
-    case CartActions.LOAD_CART:
+    case ECartActions.LOAD_CART:
       return JSON.parse(sessionStorage.getItem('CART_ITEMS')) || state;
 
-    case CartActions.CLEAR_CART:
+    case ECartActions.CLEAR_CART:
       return initialCartState;
 
-    case CartActions.ADD_PRODUCT: {
+    case ECartActions.ADD_PRODUCT: {
       const itemIndex = state.findIndex((item) => item.id === action.payload.id);
       // New item, just add it to the end of cart.
       if (itemIndex === -1) {
@@ -23,7 +23,7 @@ export function CartReducer(
       return state;
     }
 
-    case CartActions.UPDATE_QUANTITY: {
+    case ECartActions.UPDATE_QUANTITY: {
       const itemIndex = state.findIndex((item) => item.id === action.payload);
       if (itemIndex === -1) {
         return state;

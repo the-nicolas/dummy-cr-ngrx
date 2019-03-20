@@ -1,3 +1,4 @@
+import { LoadFocus } from './../../store/actions/focus.actions';
 import { Component } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
 import { Products } from '../../data/products';
@@ -5,6 +6,7 @@ import { CartPage } from '../cart/cart.page';
 import { Store, select } from '@ngrx/store';
 import { selectTotalProducts } from '../../store/selectors/cart.selector';
 import { Observable } from 'rxjs';
+import { SelectFocusList } from '../../store/selectors/focus.selector';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,7 @@ import { Observable } from 'rxjs';
 export class HomePage {
   products: any;
   totalProducts: Observable<any>;
+  activeItem: any;
 
   constructor(
     public navCtrl: NavController,
@@ -22,6 +25,8 @@ export class HomePage {
   ) {
     this.products = Products.filter(product => product.categoryId === null);
     this.totalProducts = this.store.pipe(select(selectTotalProducts));
+    this.store.dispatch(new LoadFocus());
+    this.activeItem = this.store.pipe(select(SelectFocusList));
   }
 
   public async openCart() {

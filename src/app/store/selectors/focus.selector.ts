@@ -1,0 +1,1 @@
+export const SelectFocusList = (state) => state.focus;

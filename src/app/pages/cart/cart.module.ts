@@ -10,6 +10,7 @@ import { ComponentModule } from '../../components/component.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { StoreModule } from '@ngrx/store';
 import { CartReducer } from '../../store/reducers/cart.reducer';
+import { FocusReducer } from '../../store/reducers/focus.reducer';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
     ComponentModule,
     IonicStorageModule,
     StoreModule.forFeature('cart', CartReducer),
+    StoreModule.forFeature('focus', FocusReducer),
   ],
   declarations: [
     CartPage,
