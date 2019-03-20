@@ -6,6 +6,7 @@ export interface CartItem {
   count?: number;
   categoryId?: number;
   image?: string;
+  color?: string;
   options?: {
     title: string;
     price: number;
