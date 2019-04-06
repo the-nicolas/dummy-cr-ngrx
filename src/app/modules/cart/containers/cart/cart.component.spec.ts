@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CartComponent } from './cart.component';
+import { TestModule } from 'src/app/app.test';
 
 describe('CartComponent', () => {
   let component: CartComponent;
@@ -8,9 +9,10 @@ describe('CartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CartComponent ]
+      imports: [TestModule],
+      declarations: []
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -18,6 +20,7 @@ describe('CartComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();

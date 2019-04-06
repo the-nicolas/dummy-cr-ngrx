@@ -1,47 +1,55 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, async } from '@angular/core/testing';
-
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
+import { TestModule } from './app.test';
+import { WebApiService } from './modules/shared/services/web-api.service';
+import { Store } from '@ngrx/store';
+import { ToastController } from '@ionic/angular';
 
 describe('AppComponent', () => {
 
-  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let api,store,transSrv,toastCtrl;
 
   beforeEach(async(() => {
-    statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
-    splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
-    platformReadySpy = Promise.resolve();
-    platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
-
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        { provide: StatusBar, useValue: statusBarSpy },
-        { provide: SplashScreen, useValue: splashScreenSpy },
-        { provide: Platform, useValue: platformSpy },
-      ],
-    }).compileComponents();
+      imports: [TestModule],
+      declarations: []
+    })
+      .compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    transSrv = fixture.debugElement.injector.get(WebApiService);
+    store = fixture.debugElement.injector.get(Store);
+    toastCtrl = fixture.debugElement.injector.get(ToastController);
   });
 
-  it('should initialize the app', async () => {
-    TestBed.createComponent(AppComponent);
-    expect(platformSpy.ready).toHaveBeenCalled();
-    await platformReadySpy;
-    expect(statusBarSpy.styleDefault).toHaveBeenCalled();
-    expect(splashScreenSpy.hide).toHaveBeenCalled();
-  });
 
-  // TODO: add more tests!
+  //  write test cases only for the app.component and no other componenets.
+  //  All others should be written in their corresponding component specs
+  // an example spec has been written
+
+
+  describe('Methods', ()=> {
+    it('check value of  pages on load', ()=>{
+        // arrange
+
+        // act
+      fixture.detectChanges();
+        // assert
+      expect(component.pages).toEqual([
+        { title: 'Products', url: '/home', icon: 'apps' },
+        { title: 'Invoice', url: '/home', icon: 'paper' },
+        { title: 'Daily Report', url: '/home', icon: 'list-box' },
+        { title: 'Admin', url: '/home', icon: 'lock' },
+        { title: 'Settings', url: '/home', icon: 'settings' }
+      ]);
+    });
+
+  });
 
 });

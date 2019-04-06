@@ -33,8 +33,6 @@ import { CartItemComponent } from './modules/cart/components/cart-item/cart-item
             SharedModule,StoreModule.forRoot({}),
             EffectsModule.forRoot([]),
             StoreDevtoolsModule.instrument(),
-
-
           ],
   providers: [
     StatusBar,

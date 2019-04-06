@@ -46,32 +46,32 @@ export class AppComponent {
  
 
   initializeApp() {
-    this.api.auth.callCustom('login', { deviceUid: "crTest1" }).then(response => {
-      if (response.body.hasOwnProperty("error")) {
-        throw new Error(response.body.msg)
-      } else {
-        let tokenHeader = response.headers['authorization'];
+    // this.api.auth.callCustom('login', { deviceUid: "crTest1" }).then(response => {
+    //   if (response.body.hasOwnProperty("error")) {
+    //     throw new Error(response.body.msg)
+    //   } else {
+    //     let tokenHeader = response.headers['authorization'];
 
-        if (tokenHeader) {
-          let tokStr = tokenHeader.split("Bearer ")[1];
-          let t = { access: { header: tokenHeader, token: tokStr } };
-          this.api.setCredentials({ token: t });
+    //     if (tokenHeader) {
+    //       let tokStr = tokenHeader.split("Bearer ")[1];
+    //       let t = { access: { header: tokenHeader, token: tokStr } };
+    //       this.api.setCredentials({ token: t });
 
-          this.api.client.open()
-        } else {
-          throw new Error("Token not found in login response header");
-        }
-      }
-    });
-
-
+    //       this.api.client.open()
+    //     } else {
+    //       throw new Error("Token not found in login response header");
+    //     }
+    //   }
+    // });
 
 
 
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+
+
+    // this.platform.ready().then(() => {
+    //   this.statusBar.styleDefault();
+    //   this.splashScreen.hide();
+    // });
   }
 
   public onCheckout() {
