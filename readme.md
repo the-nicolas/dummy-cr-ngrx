@@ -14,12 +14,6 @@ $ sudo npm install -g ionic
 $ npm i
 $ ionic serve
 ```
-### Todos
-
- - Write Unit Tests
- - Add Invoice Page
- - Add Cart Popup Modal
-
 ### Project Folder Structure
 
 The modules folder houses the various feauture modules and the shared modules folder:
