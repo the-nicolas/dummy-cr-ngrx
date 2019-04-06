@@ -3,7 +3,7 @@ import { CartItem } from '../../models/cart.interface';
 import { selectTotalAmount } from '.';
 
 
-describe('Login Selector', () => {
+describe('Cart Selector', () => {
     it('selectTotalAmount', () => {
         expect(selectTotalAmount({count:1})).toBe(0);
     });
