@@ -8,6 +8,7 @@ import { ProductGridComponent } from './components/product-grid/product-grid.com
 import { ProductComponent } from './containers/product/product.component';
 import { SharedModule } from '../shared/shared.module';
 import { CreateArrayPipe } from '../shared/pipes/create-array.pipe';
+import { ProductOptionsComponent } from './components/product-options/product-options.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { CreateArrayPipe } from '../shared/pipes/create-array.pipe';
     IonicModule,
     ProductRoutingModule,
   ],
-  declarations: [ProductGridComponent,ProductComponent,CreateArrayPipe]
+  declarations: [ProductGridComponent,ProductComponent,CreateArrayPipe,ProductOptionsComponent],
+  entryComponents: [ProductOptionsComponent]
 })
 export class ProductModule { }

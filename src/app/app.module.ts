@@ -23,7 +23,7 @@ import { CartItemComponent } from './modules/cart/components/cart-item/cart-item
 @NgModule({
   declarations: [AppComponent,CartComponent,CartItemComponent
     ],
-  entryComponents: [],
+  entryComponents: [CartComponent],
   imports: [BrowserModule, 
             IonicModule.forRoot(), 
             AppStoreModule,

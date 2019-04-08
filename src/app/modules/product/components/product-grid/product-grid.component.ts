@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectorRef, OnDestroy,OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform,PopoverController } from '@ionic/angular';
 import { CartItem } from '../../../../store/models/cart.interface';
 import { CartState } from '../../../../store/cart/cart.state';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,7 @@ import {
 } from '../../../../store/products';
 
 import {AddProduct} from '../../../../store/cart';
+import { ProductOptionsComponent } from '../product-options/product-options.component';
 
 @Component({
   selector: 'product-grid',
@@ -44,7 +45,7 @@ export class ProductGridComponent implements OnInit,OnDestroy {
 
   constructor(
     public platform: Platform,
-    // public popoverCtrl: PopoverController,
+    public popoverCtrl: PopoverController,
     private ref: ChangeDetectorRef,
     private cartStore: Store<CartState>,
     // private focusStore: Store<FocusState>,
@@ -77,15 +78,15 @@ export class ProductGridComponent implements OnInit,OnDestroy {
       this.addToCart(item);
       return;
     }
-    // const optionsPopover = await this.popoverCtrl.create({
-    //   component: ProductOptionsPage,
-    //   componentProps: { product: item },
-    //   event,
-    // });
-    // optionsPopover.onDidDismiss().then(() => {
-    //   this.addToCart(item);
-    // });
-    // await optionsPopover.present();
+    const optionsPopover = await this.popoverCtrl.create({
+      component: ProductOptionsComponent,
+      componentProps: { product: item },
+      event:event,
+    });
+    optionsPopover.onDidDismiss().then(() => {
+      this.addToCart(item);
+    });
+    await optionsPopover.present();
   }
 
   private findActive(activeItem: CartItem) {

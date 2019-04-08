@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController } from '@ionic/angular';
-// import { InvoicePage } from '../invoice/invoice.page';
 import { Store, select } from '@ngrx/store';
+import { InvoiceComponent} from '../../components/invoice/invoice.component'
+
 import { selectTotalAmount, selectTotalProducts } from '../../../../store/cart';
 import { Observable } from 'rxjs';
 
@@ -28,7 +29,12 @@ export class CartComponent implements OnInit {
   }
 
   public async onCheckout() {
-    // bring up invoice modal (incomplete)
+    let invoiceModal = await this.modalCtrl.create({
+      component: InvoiceComponent,
+      cssClass: 'invoice-modal',
+      showBackdrop: false,
+    });
+    await invoiceModal.present();
   }
 
   public closeMe() {

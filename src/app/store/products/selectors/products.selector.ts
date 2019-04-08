@@ -24,7 +24,7 @@ import {
     selectProductState,
     fromReducer.selectProductsMembers
   );
-  export const selectProductsAll = createSelector(
+  export const selectTotalProducts = createSelector(
     selectProductState,
     fromReducer.selectProductsTotal
   );
