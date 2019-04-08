@@ -1,7 +1,5 @@
 {
-  "name": "fluxIonic4",
-  "integrations": {
-    "cordova": {}
-  },
+  "name": "ionic-pos-seed",
+  "integrations": {},
   "type": "angular"
 }

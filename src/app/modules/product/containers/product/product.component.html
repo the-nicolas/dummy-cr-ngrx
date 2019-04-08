@@ -1,0 +1,10 @@
+<app-top-nav></app-top-nav>
+<ion-content>
+  <product-grid [products]="products" [active]="activeProduct"></product-grid>
+  <ion-fab slot="fixed" vertical="bottom" right class="hide-sm-up">
+    <ion-fab-button color="primary" class="cart-fab" (click)="openCart()">
+      <ion-icon name="cart"></ion-icon>
+      <ion-badge color="danger" *ngIf="totalProductsinCart |async">{{ totalProductsinCart|async}}</ion-badge>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

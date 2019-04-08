@@ -1,0 +1,27 @@
+<ion-grid>
+  <ion-row align-items-end>
+    <ion-col text-center padding *ngIf="!products || !products.length" class="text-md-gray">
+      <small>No products found</small>
+    </ion-col>
+    <ng-template let-product let-i="index" ngFor [ngForOf]="products">
+      <ion-col (click)="selectProduct(product, $event)">
+        <div class="product-card ion-activatable"
+          [ngClass]="{'is-category':product.isCategory, 'active':product.showSubProducts}">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div class="thumb" [ngClass]="{'image':product.image,'color':!product.image}"
+            [style.background]="product.color">
+            <img [src]="product.image || './assets/imgs/placeholder.jpg'" />
+            <h3 class="title">{{product.title}}</h3>
+          </div>
+          <h3 class="title" text-nowrap>{{product.title}}</h3>
+          <div class="arrow"></div>
+        </div>
+      </ion-col>
+      <ion-col size="12" *ngIf="addSubGrid(i) && subProducts !== null">
+        <product-grid [products]="subProducts" [active]="activeItem"
+          *ngIf="( perRow | createArray : i - (thisRow - 1) ).indexOf(activeItemIndex) !== -1">
+        </product-grid>
+      </ion-col>
+    </ng-template>
+  </ion-row>
+</ion-grid>

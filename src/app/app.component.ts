@@ -1,40 +1,34 @@
 import { Component } from '@angular/core';
-import { Platform, ToastController, ModalController } from '@ionic/angular';
+import { Platform,ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { HomePage } from './pages/home/home.page';
-import { WebApiService } from './services/web-api.service';
 import { Store, select } from '@ngrx/store';
-import { CartState } from './store/state/cart.state';
-import { selectTotalAmount, selectTotalProducts, selectCartList } from './store/selectors/cart.selector';
-import { LoadCart } from './store/actions/cart.actions';
+import {CartState} from './store/cart/cart.state'
+import { LoadCart,selectCartList,selectTotalAmount,selectTotalProducts } from './store/cart';
+import { WebApiService } from './modules/shared/services/web-api.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  rootPage: any = HomePage;
-
   pages: Array<{ title: string, url: any, icon: string }>;
+
   totalProducts: any;
   totalAmount: any;
   cartValue: any;
   cartList: any;
 
   constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
     public toastCtrl: ToastController,
-    public platform: Platform,
-    public statusBar: StatusBar,
-    public splashScreen: SplashScreen,
-    public modalCtrl: ModalController,
+    private statusBar: StatusBar,
     public api: WebApiService,
     private transSrv: WebApiService,
     private store: Store<CartState>,
   ) {
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Products', url: '/home', icon: 'apps' },
       { title: 'Invoice', url: '/home', icon: 'paper' },
@@ -49,36 +43,35 @@ export class AppComponent {
     this.totalProducts = this.store.pipe(select(selectTotalProducts));
   }
 
+ 
+
   initializeApp() {
-    this.api.auth.callCustom('login', { deviceUid: "crTest1" }).then(response => {
-      if (response.body.hasOwnProperty("error")) {
-        throw new Error(response.body.msg)
-      } else {
-        let tokenHeader = response.headers['authorization'];
+    // this.api.auth.callCustom('login', { deviceUid: "crTest1" }).then(response => {
+    //   if (response.body.hasOwnProperty("error")) {
+    //     throw new Error(response.body.msg)
+    //   } else {
+    //     let tokenHeader = response.headers['authorization'];
 
-        if (tokenHeader) {
-          let tokStr = tokenHeader.split("Bearer ")[1];
-          let t = { access: { header: tokenHeader, token: tokStr } };
-          this.api.setCredentials({ token: t });
+    //     if (tokenHeader) {
+    //       let tokStr = tokenHeader.split("Bearer ")[1];
+    //       let t = { access: { header: tokenHeader, token: tokStr } };
+    //       this.api.setCredentials({ token: t });
 
-          this.api.client.open()
-        } else {
-          throw new Error("Token not found in login response header");
-        }
-      }
-    });
+    //       this.api.client.open()
+    //     } else {
+    //       throw new Error("Token not found in login response header");
+    //     }
+    //   }
+    // });
 
-    this.platform.ready().then(() => {
-      // Status bar configurations
-      this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString('#ffffff'); // 00786c
-      this.statusBar.styleDefault()
 
-      // Hide splash screen
-      setTimeout(() => {
-        this.splashScreen.hide();
-      }, 100);
-    });
+
+
+
+    // this.platform.ready().then(() => {
+    //   this.statusBar.styleDefault();
+    //   this.splashScreen.hide();
+    // });
   }
 
   public onCheckout() {
