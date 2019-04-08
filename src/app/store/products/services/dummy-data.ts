@@ -196,29 +196,29 @@ export const Products: Product[] = [
     "id": 999,
     "title": "Snacks",
     "isCategory": false,
-    "categoryId": 3,
-    "image": "",
+    "categoryId": 2,
+    "image": "assets/imgs/products/pizza.jpg",
     "price": 10,
     "options": [
       {
         "title": "Option One",
-        "price": 0
+        "price": 11
       },
       {
         "title": "Option Two",
-        "price": 0
+        "price": 12
       },
       {
         "title": "Option Three",
-        "price": 0
+        "price": 13
       },
       {
         "title": "Option Four",
-        "price": 0
+        "price": 14
       },
       {
         "title": "Option Five",
-        "price": 0
+        "price": 15
       }
     ]
   },
