@@ -3,9 +3,9 @@ import { Platform,ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Store, select } from '@ngrx/store';
-import {CartState} from './store/cart/cart.state'
-import { LoadCart,selectCartList,selectTotalAmount,selectTotalProducts } from './store/cart';
-import { WebApiService } from './modules/shared/services/web-api.service';
+import {CartState} from './store'
+import { LoadCart,selectCartList,selectTotalAmount,selectTotalProductsInCart } from './store';
+import { WebApiService } from './shared/services/web-api.service';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +40,7 @@ export class AppComponent {
 
     this.cartList = this.store.pipe(select(selectCartList));
     this.totalAmount = this.store.pipe(select(selectTotalAmount));
-    this.totalProducts = this.store.pipe(select(selectTotalProducts));
+    this.totalProducts = this.store.pipe(select(selectTotalProductsInCart));
   }
 
  
