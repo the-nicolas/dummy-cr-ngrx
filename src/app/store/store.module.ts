@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import {ProductsReducer,PRODUCTS_EFFECTS,PRODUCT_SERVICES} from './products'
-import {CartReducer,CART_EFFECTS} from './cart'
-import {AUTHENTICATION_EFFECTS,AUTHENTICATION_SERVICES,AuthenticationReducer} from './authentication'
+import {ProductsReducer,PRODUCTS_EFFECTS,PRODUCT_SERVICES} from '../modules/product/store'
+import {CartReducer,CART_EFFECTS} from '../modules/cart/store'
+import {AUTHENTICATION_EFFECTS,AUTHENTICATION_SERVICES,AuthenticationReducer} from '../modules/authentication/store'
 
 const effects = [
   ...PRODUCTS_EFFECTS,
-  ...CART_EFFECTS
+  ...CART_EFFECTS,
+  ...AUTHENTICATION_EFFECTS
 ]
 
 @NgModule({
@@ -23,6 +24,7 @@ const effects = [
   declarations: [],
   providers: [
     PRODUCT_SERVICES,
+    AUTHENTICATION_SERVICES
   ]
   
 })

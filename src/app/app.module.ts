@@ -11,12 +11,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SharedModule} from './modules/shared/shared.module'
+import { SharedModule} from './shared/shared.module'
 import {ProductModule} from './modules/product/product.module'
 import { AppStoreModule } from './store/store.module';
 import { CartModule } from './modules/cart/cart.module';
 import { CartComponent } from './modules/cart/containers/cart/cart.component';
 import { CartItemComponent } from './modules/cart/components/cart-item/cart-item.component';
+import { AuthenticatedGuard } from './shared/authentication.guard';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
 
 
 
@@ -28,16 +30,19 @@ import { CartItemComponent } from './modules/cart/components/cart-item/cart-item
             IonicModule.forRoot(), 
             AppStoreModule,
             AppRoutingModule,
+            AuthenticationModule,
             ProductModule,  
             CartModule,  
-            SharedModule,StoreModule.forRoot({}),
+            SharedModule,
+            StoreModule.forRoot({}),
             EffectsModule.forRoot([]),
             StoreDevtoolsModule.instrument(),
           ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthenticatedGuard
   ],
   bootstrap: [AppComponent]
 })

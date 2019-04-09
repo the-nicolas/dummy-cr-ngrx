@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate, keyframes } from '@angular/animations';
 import { Store, select } from '@ngrx/store';
-import { CartState } from '../../../../store/cart/cart.state';
-import { selectCartList } from '../../../../store/cart/selectors/cart.selectors';
-import { UpdateProductQuantity, AddProduct } from '../../../../store/cart/actions/cart.actions';
+import { CartState } from '../../../../store';
+import { selectCartList } from '../../../../store';
+import { UpdateProductQuantity, AddProduct } from '../../../../store';
 
 @Component({
   selector: 'cart-item',

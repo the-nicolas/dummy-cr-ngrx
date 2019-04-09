@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, MenuController, NavParams, ModalController } from '@ionic/angular';
 import { Store, select } from '@ngrx/store';
-import { CartState } from '../../../../store/cart/cart.state';
-import { selectTotalAmount, selectTotalProducts } from '../../../../store/cart';
+import { CartState } from '../../../../store';
+import { selectTotalAmount, selectTotalProductsInCart } from '../../../../store';
 
 @Component({
   selector: 'app-invoice',
@@ -24,7 +24,7 @@ export class InvoiceComponent {
 
   ngOnInit() {
     this.totalAmount = this.store.pipe(select(selectTotalAmount));
-    this.totalProducts = this.store.pipe(select(selectTotalProducts));
+    this.totalProducts = this.store.pipe(select(selectTotalProductsInCart));
   }
 
   public closeMe() {

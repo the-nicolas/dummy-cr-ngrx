@@ -3,7 +3,7 @@ import { NavController, NavParams, ModalController } from '@ionic/angular';
 import { Store, select } from '@ngrx/store';
 import { InvoiceComponent} from '../../components/invoice/invoice.component'
 
-import { selectTotalAmount, selectTotalProducts } from '../../../../store/cart';
+import { selectTotalAmount, selectTotalProductsInCart } from '../../../../store';
 import { Observable } from 'rxjs';
 
 
@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
     public modalCtrl: ModalController,
     private store: Store<any>) { 
       this.totalAmount = this.store.pipe(select(selectTotalAmount));
-      this.totalProducts = this.store.pipe(select(selectTotalProducts));
+      this.totalProducts = this.store.pipe(select(selectTotalProductsInCart));
     }
 
   ngOnInit() {

@@ -1,13 +1,13 @@
 import { Component, Input, ChangeDetectorRef, OnDestroy,OnInit } from '@angular/core';
 import { Platform,PopoverController } from '@ionic/angular';
-import { CartItem } from '../../../../store/models/cart.interface';
-import { CartState } from '../../../../store/cart/cart.state';
+import { CartItem } from '../../../../store';
+import { CartState } from '../../../../store';
 import { Store } from '@ngrx/store';
 import {
   ProductsState, selectAllproducts, UpdateSelectedProduct
-} from '../../../../store/products';
+} from '../../../../store';
 
-import {AddProduct} from '../../../../store/cart';
+import {AddProduct} from '../../../../store/';
 import { ProductOptionsComponent } from '../product-options/product-options.component';
 
 @Component({
