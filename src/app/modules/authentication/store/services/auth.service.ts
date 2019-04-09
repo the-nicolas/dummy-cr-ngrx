@@ -26,7 +26,6 @@ export class AuthenticationService {
    //return this.http.post<User>(url, {email, password});
   login(email: string, password: string): Observable<any> {    
     return new Observable((observer) => {
-      console.log(email,password)
       if (email === this.testUser.email && password === this.testUser.password) {
         observer.next({email: this.testUser.email, token: this.testUser.token});
       } else {

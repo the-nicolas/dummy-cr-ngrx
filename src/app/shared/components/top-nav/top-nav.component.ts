@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Logout,ClearCart} from '../../../store'
+import { Logout,ClearCart,getLoggedInUser, isUserAuthenticated} from '../../../store'
 
 @Component({
   selector: 'app-top-nav',
@@ -9,9 +9,12 @@ import { Logout,ClearCart} from '../../../store'
 })
 export class TopNavComponent implements OnInit {
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<any>) {
+    
+   }
 
-  ngOnInit() {}
+  ngOnInit() {    
+  }
 
   Logout(){
     this.store.dispatch(new ClearCart())

@@ -2,6 +2,7 @@ import {
     AuthenticationReducer,
     AuthState
   } from "../../../../store";
+import { state } from '@angular/animations';
 export const isUserAuthenticated = (state: AuthState) => {
   if(localStorage.getItem('token')!==null){
       return true
@@ -10,3 +11,5 @@ export const isUserAuthenticated = (state: AuthState) => {
     state.isAuthenticated
   }
 };
+
+export const getLoggedInUser = (state:AuthState) => state.user

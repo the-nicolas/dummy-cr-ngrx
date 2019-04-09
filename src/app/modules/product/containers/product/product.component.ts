@@ -4,7 +4,7 @@ import { Store,select } from '@ngrx/store';
 import {
   ProductsState, LoadProducts,selectAllproducts,selectProductCategories, LoadSelectedProduct, selectCurrentProduct
 } from '../../../../store';
-import {selectTotalProductsInCart} from '../../../../store'
+import {selectTotalProductsInCart,getLoggedInUser,isUserAuthenticated} from '../../../../store'
 import { CartComponent } from 'src/app/modules/cart/containers/cart/cart.component';
 
 @Component({
@@ -17,13 +17,18 @@ export class ProductComponent implements OnInit {
   allProducts:any;
   activeProduct:any;
   totalProductsinCart:any;
+  loggedInUser:any;
+  isLoggedIn:any;
 
-  constructor(private productStore: Store<ProductsState>,
-              public modalCtrl: ModalController,
+  constructor(public modalCtrl: ModalController,
               private store: Store<any>
 
              ) {
-              this.totalProductsinCart = this.store.pipe(select(selectTotalProductsInCart));
+              // this.totalProductsinCart = this.store.pipe(select(selectTotalProductsInCart));
+              // this.store.select(getLoggedInUser).subscribe(user =>{
+              //   this.loggedInUser = user.email
+              // })
+              // this.store.select(isUserAuthenticated).subscribe(auth=>this.isLoggedIn=auth)
               }
 
   ngOnInit() {

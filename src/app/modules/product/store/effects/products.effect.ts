@@ -31,7 +31,6 @@ export class ProductsEffect {
               return new fromActions.LoadProductsSuccess(res);
             }),
             tap(res => {
-                console.log(res);
             }),
             catchError(error => of(new fromActions.LoadProductsFail(error)))
           );

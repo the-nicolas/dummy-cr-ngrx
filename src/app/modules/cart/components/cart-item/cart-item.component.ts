@@ -40,12 +40,10 @@ export class CartItemComponent {
     private store: Store<CartState>
   ) {
     this.cartListStore = this.store.pipe(select(selectCartList));
-    console.log(this.cartListStore)
   }
 
   addProduct(cart) {
     this.store.dispatch(new AddProduct(cart));
-    console.log(new AddProduct(cart))
   }
 
   updateQuantity(cart, count?: number) {
