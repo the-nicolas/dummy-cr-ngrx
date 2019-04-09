@@ -5,7 +5,11 @@ import { StoreModule, Store } from '@ngrx/store';
 import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from '../app/app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+<<<<<<< HEAD
 import { SharedModule } from '../app/modules/shared/shared.module';
+=======
+import { SharedModule } from '../app/shared/shared.module';
+>>>>>>> dummy-cr-neoito
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { APP_BASE_HREF, CommonModule } from '@angular/common';
@@ -20,7 +24,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { CartItemComponent } from './modules/cart/components/cart-item/cart-item.component';
 import { CartComponent } from './modules/cart/containers/cart/cart.component';
 import { WebApiServiceMock } from './modules/mocks/services/webApi.service.mock';
+<<<<<<< HEAD
 import { WebApiService } from './modules/shared/services/web-api.service';
+=======
+import { WebApiService } from './shared/services/web-api.service';
+>>>>>>> dummy-cr-neoito
 
 export class MockNavParams {
     data = {
