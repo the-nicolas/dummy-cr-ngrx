@@ -3,7 +3,7 @@ import { NavController, NavParams, ModalController } from '@ionic/angular';
 import { Store, select } from '@ngrx/store';
 import { InvoiceComponent} from '../../components/invoice/invoice.component'
 
-import { selectTotalAmount, selectTotalProductsInCart } from '../../../../store';
+import { selectTotalAmount, selectTotalProductsInCart,NewInvoice } from '../../../../store';
 import { Observable } from 'rxjs';
 
 
@@ -39,6 +39,11 @@ export class CartComponent implements OnInit {
 
   public closeMe() {
     this.modalCtrl.dismiss();
+  }
+
+  public newInvoice(){
+    this.store.dispatch(new NewInvoice())
+
   }
 
 }

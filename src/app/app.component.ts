@@ -3,7 +3,7 @@ import { Platform,ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Store, select } from '@ngrx/store';
-import {CartState} from './store'
+import {CartState, NewInvoice} from './store'
 import { LoadCart,selectCartList,selectTotalAmount,selectTotalProductsInCart } from './store';
 import { WebApiService } from './shared/services/web-api.service';
 
@@ -96,5 +96,10 @@ export class AppComponent {
       console.log("payment err");
       console.log(err)
     });
+  }
+
+  public newInvoice(){
+    this.store.dispatch(new NewInvoice())
+
   }
 }

@@ -6,6 +6,7 @@ export enum ECartActions {
   ADD_PRODUCT = '[Cart] Add Product',
   UPDATE_QUANTITY = '[Cart] Remove Product',
   CLEAR_CART = '[Cart] Clear Cart',
+  NEW_INVOICE = '[Cart] New Invoice'
 }
 
 export class LoadCart implements Action {
@@ -35,4 +36,9 @@ export class ClearCart implements Action {
   constructor(public payload?: number) { }
 }
 
-export type CartActions = LoadCart | AddProduct | UpdateProductQuantity | ClearCart;
+export class NewInvoice implements Action {
+  readonly type = ECartActions.NEW_INVOICE;
+
+}
+
+export type CartActions = LoadCart | AddProduct | UpdateProductQuantity | ClearCart | NewInvoice;
