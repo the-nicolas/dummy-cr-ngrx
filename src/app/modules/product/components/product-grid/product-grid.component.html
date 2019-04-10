@@ -4,7 +4,7 @@
       <small>No products found</small>
     </ion-col>
     <ng-template let-product let-i="index" ngFor [ngForOf]="products">
-      <ion-col (click)="selectProduct(product, $event)">
+      <ion-col size="2.4" (click)="selectProduct(product, $event)">
         <div class="product-card ion-activatable"
           [ngClass]="{'is-category':product.isCategory, 'active':product.showSubProducts}">
           <ion-ripple-effect></ion-ripple-effect>
@@ -16,7 +16,7 @@
           <h3 class="title" text-nowrap>{{product.title}}</h3>
           <div class="arrow"></div>
         </div>
-      </ion-col>
+      </ion-col>     
       <ion-col size="12" *ngIf="addSubGrid(i) && subProducts !== null">
         <product-grid [products]="subProducts" [active]="activeItem"
           *ngIf="( perRow | createArray : i - (thisRow - 1) ).indexOf(activeItemIndex) !== -1">
