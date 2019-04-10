@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Platform,ToastController } from '@ionic/angular';
+import { Platform,ToastController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Store, select } from '@ngrx/store';
 import {CartState, NewInvoice} from './store'
 import { LoadCart,selectCartList,selectTotalAmount,selectTotalProductsInCart } from './store';
 import { WebApiService } from './shared/services/web-api.service';
-
+import {CartComponent} from './modules/cart/containers/cart/cart.component'
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -27,6 +27,7 @@ export class AppComponent {
     public api: WebApiService,
     private transSrv: WebApiService,
     private store: Store<CartState>,
+    public modalCtrl: ModalController,
   ) {
     this.initializeApp();
     this.pages = [
@@ -74,28 +75,37 @@ export class AppComponent {
     // });
   }
 
-  public onCheckout() {
-    const toastMessage = async (message) => {
-      const toast = await this.toastCtrl.create({
-        message: message,
-        showCloseButton: true
-      });
-      toast.present();
-    }
+  // public onCheckout() {
+  //   const toastMessage = async (message) => {
+  //     const toast = await this.toastCtrl.create({
+  //       message: message,
+  //       showCloseButton: true
+  //     });
+  //     toast.present();
+  //   }
 
-    let a = Math.round(this.totalAmount * 100);
-    this.transSrv.transactions.create('{"total":' + a + '}').then(function (result) {
-      toastMessage('Payment OK.');
-      console.log(result)
-    }, function (result) {
-      toastMessage('Payment failed!');
-      console.log("payment failed");
-      console.log(result)
-    }).catch(function (err) {
-      toastMessage('Payment failed!');
-      console.log("payment err");
-      console.log(err)
-    });
+  //   let a = Math.round(this.totalAmount * 100);
+  //   this.transSrv.transactions.create('{"total":' + a + '}').then(function (result) {
+  //     toastMessage('Payment OK.');
+  //     console.log(result)
+  //   }, function (result) {
+  //     toastMessage('Payment failed!');
+  //     console.log("payment failed");
+  //     console.log(result)
+  //   }).catch(function (err) {
+  //     toastMessage('Payment failed!');
+  //     console.log("payment err");
+  //     console.log(err)
+  //   });
+  // }
+
+  public  onCheckout() {
+    this.openCart()
+  }
+
+  public async openCart() {
+    const cartModal = await this.modalCtrl.create({ component: CartComponent });
+    return await cartModal.present();
   }
 
   public newInvoice(){
